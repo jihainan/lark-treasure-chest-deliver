@@ -29,7 +29,7 @@ public class ApiDocConfiguration {
                 .groupName("DeliverTask")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.kit.deliver.controller.v1.api"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/api/v1/deliver/**"))
                 .build()
                 .apiInfo(apiInfo());
     }
@@ -43,7 +43,7 @@ public class ApiDocConfiguration {
                 .groupName("Message")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.kit.deliver.controller.v1.api"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/api/v1/message/**"))
                 .build()
                 .apiInfo(apiInfo());
     }
