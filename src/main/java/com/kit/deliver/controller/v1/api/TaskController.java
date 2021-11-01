@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api/v1/deliver/")
-@Api(value = "deliver-application")
+@Api(value = "operations related to deliver tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -28,7 +28,7 @@ public class TaskController {
     }
 
     @GetMapping("tasks")
-    @ApiOperation(value = "")
+    @ApiOperation(value = "get all tasks")
     public Object getAllTasks() {
         return taskService.getAllTasks();
     }
