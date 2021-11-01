@@ -1,6 +1,10 @@
 package com.kit.deliver.controller.v1.api;
 
+import com.kit.deliver.service.TaskService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,4 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/deliver/")
 @Api(value = "deliver-application")
 public class TaskController {
+
+    private final TaskService taskService;
+
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @GetMapping("tasks")
+    @ApiOperation(value = "")
+    public Object getAllTasks() {
+        return taskService.getAllTasks();
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 /**
  * @ClassName Task
  * @Description Task used to integrate messages and rules
@@ -25,14 +27,19 @@ public class Task {
     private String id;
 
     /**
+     * deliver task name
+     */
+    private String name;
+
+    /**
      * associate message
      */
-    @DBRef
+    @DBRef(lazy = true)
     private Message message;
 
     /**
      * associate rules
      */
-    @DBRef
-    private Rule[] rules;
+    @DBRef(lazy = true)
+    private List<Rule> rules;
 }
