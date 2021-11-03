@@ -39,8 +39,8 @@ public class Response<T> {
      * <T> shows that this is a generic method
      *     the number can be more than one <T, K>
      */
-    public static <T> Response<T> badRequest() {
-        Response<T> response = new Response<>();
+    public static <K> Response<K> badRequest() {
+        Response<K> response = new Response<>();
         response.setStatus(Status.BAD_REQUEST);
         return response;
     }
@@ -51,8 +51,8 @@ public class Response<T> {
      * @Date 12:46 上午 2021/11/2
      * @return com.kit.deliver.dto.response.Response<T>
      */
-    public static <T> Response<T> ok() {
-        Response<T> response = new Response<>();
+    public static <K> Response<K> ok() {
+        Response<K> response = new Response<>();
         response.setStatus(Status.OK);
         return response;
     }
@@ -63,8 +63,8 @@ public class Response<T> {
      * @Date 12:47 上午 2021/11/2
      * @return com.kit.deliver.dto.response.Response<T>
      */
-    public static <T> Response<T> exception() {
-        Response<T> response = new Response<>();
+    public static <K> Response<K> exception() {
+        Response<K> response = new Response<>();
         response.setStatus(Status.EXCEPTION);
         return response;
     }
@@ -75,8 +75,8 @@ public class Response<T> {
      * @Date 12:49 上午 2021/11/2
      * @return com.kit.deliver.dto.response.Response<T>
      */
-    public static <T> Response<T> notFound() {
-        Response<T> response = new Response<>();
+    public static <K> Response<K> notFound() {
+        Response<K> response = new Response<>();
         response.setStatus(Status.NOT_FOUND);
         return response;
     }
@@ -87,8 +87,8 @@ public class Response<T> {
      * @Date 12:51 上午 2021/11/2
      * @return com.kit.deliver.dto.response.Response<T>
      */
-    public static <T> Response<T> duplicateEntity() {
-        Response<T> response = new Response<>();
+    public static <K> Response<K> duplicateEntity() {
+        Response<K> response = new Response<>();
         response.setStatus(Status.DUPLICATE_ENTITY);
         return response;
     }
@@ -107,6 +107,4 @@ public class Response<T> {
                 .setTimestamp(DateUtils.today());
         setErrors(error);
     }
-
-
 }
