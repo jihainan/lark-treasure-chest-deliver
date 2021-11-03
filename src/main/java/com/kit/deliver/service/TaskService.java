@@ -2,7 +2,7 @@ package com.kit.deliver.service;
 
 import com.kit.deliver.dto.model.TaskDto;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @InterfaceName TaskService
@@ -20,5 +20,5 @@ public interface TaskService {
      * @Date 4:20 下午 2021/10/29
      * @return java.util.Set<com.kit.deliver.dto.model.TaskDto>
      */
-    Set<TaskDto> getAllTasks();
+    List<TaskDto> getAllTasks();
 }

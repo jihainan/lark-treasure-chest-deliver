@@ -6,8 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -30,10 +30,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Set<TaskDto> getAllTasks() {
+    public List<TaskDto> getAllTasks() {
         return taskRepository.findAll()
                 .stream()
                 .map(task -> modelMapper.map(task, TaskDto.class))
-                .collect(Collectors.toCollection(TreeSet::new));
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 }

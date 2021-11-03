@@ -1,5 +1,7 @@
 package com.kit.deliver.controller.v1.api;
 
+import com.kit.deliver.dto.model.TaskDto;
+import com.kit.deliver.dto.response.Response;
 import com.kit.deliver.service.TaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @ClassName MessageController
@@ -29,7 +33,9 @@ public class TaskController {
 
     @GetMapping("tasks")
     @ApiOperation(value = "get all tasks")
-    public Object getAllTasks() {
-        return taskService.getAllTasks();
+    public Response<List<TaskDto>> getAllTasks() {
+        return Response.
+                <List<TaskDto>>ok()
+                .setPayload(taskService.getAllTasks());
     }
 }
