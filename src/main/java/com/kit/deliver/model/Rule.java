@@ -24,6 +24,15 @@ public class Rule {
     @Id
     private String id;
 
-    @DBRef
+    /**
+     * property name using in rule
+     */
+    private String propertyName;
+
+    /**
+     * related message
+     * lazy loading by default
+     */
+    @DBRef(lazy = true)
     private Message message;
 }
