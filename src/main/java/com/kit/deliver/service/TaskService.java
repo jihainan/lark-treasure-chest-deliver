@@ -21,4 +21,14 @@ public interface TaskService {
      * @return java.util.Set<com.kit.deliver.dto.model.TaskDto>
      */
     List<TaskDto> getAllTasks();
+
+    /**
+     * get task by task id
+     * @Author jihainan
+     * @Description get task by task id
+     * @Date 4:02 下午
+     * @param taskId task id
+     * @return com.kit.deliver.dto.model.TaskDto
+     */
+    TaskDto getTaskById(String taskId);
 }

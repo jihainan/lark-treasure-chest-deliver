@@ -6,9 +6,7 @@ import com.kit.deliver.service.TaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("api/v1/deliver/")
+@RequestMapping("api/v1/deliver/task")
 @Api(value = "operations related to deliver tasks")
 public class TaskController {
 
@@ -31,11 +29,20 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("tasks")
+    @GetMapping("/")
     @ApiOperation(value = "get all tasks")
-    public Response<List<TaskDto>> getAllTasks() {
-        return Response.
-                <List<TaskDto>>ok()
+    public Response<List<TaskDto>> list() {
+        return Response
+                .<List<TaskDto>>ok()
                 .setPayload(taskService.getAllTasks());
     }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "get a task by task id")
+    public Response<TaskDto> query(@PathVariable("id") String id) {
+        return Response
+                .<TaskDto>ok()
+                .setPayload(taskService.getTaskById(id));
+    }
+
 }

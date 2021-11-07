@@ -1,6 +1,11 @@
 package com.kit.deliver.service;
 
+import com.kit.deliver.dto.mapper.TaskMapper;
 import com.kit.deliver.dto.model.TaskDto;
+import com.kit.deliver.exception.CustomException;
+import com.kit.deliver.exception.widget.EntityType;
+import com.kit.deliver.exception.widget.ExceptionType;
+import com.kit.deliver.model.Task;
 import com.kit.deliver.repository.TaskRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +13,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.kit.deliver.exception.widget.EntityType.*;
+import static com.kit.deliver.exception.widget.ExceptionType.*;
 
 /**
  * @ClassName TaskServiceImpl
@@ -35,5 +44,41 @@ public class TaskServiceImpl implements TaskService {
                 .stream()
                 .map(task -> modelMapper.map(task, TaskDto.class))
                 .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public TaskDto getTaskById(String taskId) {
+        Optional<Task> task = taskRepository.findById(taskId);
+        if (task.isPresent()) {
+            return TaskMapper.toTaskDto(task.get());
+        }
+        throw exception(TASK, ENTITY_NOT_FOUND, taskId);
+    }
+
+    /**
+     * @Author jihainan
+     * @Description runtime exception in task service implement
+     * @Date 4:23 下午
+     * @param entityType entity type
+     * @param exceptionType exception type
+     * @param args others
+     * @return java.lang.RuntimeException
+     */
+    private RuntimeException exception (EntityType entityType, ExceptionType exceptionType, String... args) {
+        return CustomException.throwException(entityType, exceptionType, args);
+    }
+
+    /**
+     * @Author jihainan
+     * @Description runtime exception with id in task service implement
+     * @Date 4:23 下午
+     * @param entityType entity type
+     * @param exceptionType exception type
+     * @param id entity id
+     * @param args others
+     * @return java.lang.RuntimeException
+     */
+    private RuntimeException exceptionWithId(EntityType entityType, ExceptionType exceptionType, String id, String... args) {
+        return CustomException.throwExceptionWithId(entityType, exceptionType, id, args);
     }
 }
