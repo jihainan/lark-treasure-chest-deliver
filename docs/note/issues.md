@@ -15,3 +15,7 @@
 4. RESTful api 规范
    
    [RESTful Api 规范](https://choerodon.io/zh/docs/contributor-guide/development/conventions/restful/)
+
+5. 异常分类
+
+   [java 异常类图](https://www.jianshu.com/p/279c848efa8b)
