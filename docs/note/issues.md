@@ -7,3 +7,11 @@
 2. 事务描述
 
    [事务原理及用法解析](https://juejin.cn/post/6844904179341737991)
+
+3. 全局处理Controller异常
+
+   [@ControllerAdvice + @ExceptionHandler 全局处理 Controller 层异常](https://blog.csdn.net/kinginblue/article/details/70186586)
+
+4. RESTful api 规范
+   
+   [RESTful Api 规范](https://choerodon.io/zh/docs/contributor-guide/development/conventions/restful/)
