@@ -1,6 +1,9 @@
 package com.kit.deliver.service;
 
 import com.kit.deliver.dto.model.RuleDto;
+import com.kit.deliver.model.Rule;
+
+import java.util.List;
 
 /**
  * @InterfaceName RuleService
@@ -19,5 +22,16 @@ public interface RuleService {
      * @param ruleDto rule data transfer object
      * @return com.kit.deliver.dto.model.RuleDto
      */
-    RuleDto addRule(RuleDto ruleDto);
+    Rule addRule(RuleDto ruleDto);
+
+
+    /**
+     * batch set rules of the message
+     * @Author jihainan
+     * @Description batch set rules of the message
+     * @Date 2:04 下午
+     * @param rules rule list
+     * @return java.util.List<com.kit.deliver.model.Rule>
+     */
+    List<Rule> batchAddRules(List<RuleDto> rules);
 }
