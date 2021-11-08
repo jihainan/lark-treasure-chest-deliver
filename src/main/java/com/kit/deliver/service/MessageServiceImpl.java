@@ -36,12 +36,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public MessageDto addMessage(MessageDto messageDto) {
+    public Message addMessage(MessageDto messageDto) {
         Message messageModel = new Message()
                 .setType(messageDto.getType())
                 .setContent(messageDto.getContent());
-        messageRepository.save(messageModel);
-        return modelMapper.map(messageModel, MessageDto.class);
+        return messageRepository.save(messageModel);
     }
 
     @Override

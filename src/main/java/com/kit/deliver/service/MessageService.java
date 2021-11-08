@@ -20,7 +20,7 @@ public interface MessageService {
      * @param  messageDto message data transfer object
      * @return com.kit.deliver.dto.model.MessageDto
      */
-    MessageDto addMessage(MessageDto messageDto);
+    Message addMessage(MessageDto messageDto);
 
     /**
      * get message by message id
