@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * @ClassName TaskDto
  * @Description TaskDto used to integrate messages and rules
@@ -33,4 +35,19 @@ public class TaskDto {
      * deliver task name
      */
     private String name;
+
+    /**
+     * message type enum by MessageType
+     */
+    private Integer messageType;
+
+    /**
+     * content of task
+     */
+    private Object messageContent;
+
+    /**
+     * message rule
+     */
+    private List<RuleDto> rules;
 }

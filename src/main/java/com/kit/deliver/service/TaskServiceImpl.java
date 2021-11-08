@@ -1,15 +1,20 @@
 package com.kit.deliver.service;
 
 import com.kit.deliver.dto.mapper.TaskMapper;
+import com.kit.deliver.dto.model.MessageDto;
+import com.kit.deliver.dto.model.RuleDto;
 import com.kit.deliver.dto.model.TaskDto;
 import com.kit.deliver.exception.CustomException;
 import com.kit.deliver.exception.widget.EntityType;
 import com.kit.deliver.exception.widget.ExceptionType;
+import com.kit.deliver.model.Message;
+import com.kit.deliver.model.Rule;
 import com.kit.deliver.model.Task;
 import com.kit.deliver.repository.TaskRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,11 +36,23 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
+    private MessageService messageService;
+    private RuleService ruleService;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository, ModelMapper modelMapper) {
         this.taskRepository = taskRepository;
         this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
+    @Autowired
+    public void setRuleService(RuleService ruleService) {
+        this.ruleService = ruleService;
     }
 
     @Override
@@ -53,6 +70,30 @@ public class TaskServiceImpl implements TaskService {
             return TaskMapper.toTaskDto(task.get());
         }
         throw exception(TASK, ENTITY_NOT_FOUND, taskId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public TaskDto publishTask(TaskDto taskDto) {
+        // add a new message
+        MessageDto messageDto = new MessageDto()
+                .setType(taskDto.getMessageType())
+                .setContent(taskDto.getMessageContent());
+        Message message = messageService.addMessage(messageDto);
+
+        // add rules corresponding to the message
+        List<RuleDto> rulesDto = taskDto.getRules();
+        rulesDto.forEach(ruleDto -> ruleDto.setMessageId(message.getId()));
+        List<Rule> rules =  ruleService.batchAddRules(rulesDto);
+
+        // after message and rules saved, add new task
+        Task taskModel = new Task()
+                .setName(taskDto.getName())
+                .setMessage(message)
+                .setRules(rules);
+        taskRepository.save(taskModel);
+
+        return modelMapper.map(taskModel, TaskDto.class);
     }
 
     /**

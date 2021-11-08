@@ -31,4 +31,14 @@ public interface TaskService {
      * @return com.kit.deliver.dto.model.TaskDto
      */
     TaskDto getTaskById(String taskId);
+
+    /**
+     * publish a deliver task
+     * @Author jihainan
+     * @Description publish a deliver task
+     * @Date 9:35 上午
+     * @param taskDto task data transfer object
+     * @return com.kit.deliver.dto.model.TaskDto
+     */
+    TaskDto publishTask(TaskDto taskDto);
 }
