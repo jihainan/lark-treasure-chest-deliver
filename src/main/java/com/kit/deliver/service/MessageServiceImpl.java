@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import static com.kit.deliver.exception.widget.EntityType.*;
@@ -50,6 +53,22 @@ public class MessageServiceImpl implements MessageService {
             return message.get();
         }
         throw messageExceptionWithId(MESSAGE, ExceptionType.ENTITY_NOT_FOUND, messageId);
+    }
+
+    @Override
+    public List<MessageDto> getMessageListByIds(List<String> messageIds) {
+        // message id list deduplication
+        HashSet<String> idsSet = new HashSet<>(messageIds);
+        messageIds.clear();
+        messageIds.addAll(idsSet);
+
+        // batch get messages
+        List<MessageDto> messageDtoList = new ArrayList<>();
+        messageIds.forEach(messageId -> {
+            Optional<Message> message = messageRepository.findById(messageId);
+            message.ifPresent(value -> messageDtoList.add(modelMapper.map(value, MessageDto.class)));
+        });
+        return messageDtoList;
     }
 
     /**

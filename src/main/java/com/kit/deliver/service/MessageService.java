@@ -3,6 +3,8 @@ package com.kit.deliver.service;
 import com.kit.deliver.dto.model.MessageDto;
 import com.kit.deliver.model.Message;
 
+import java.util.List;
+
 /**
  * @InterfaceName MessageService
  * @Description Message service interface
@@ -31,5 +33,15 @@ public interface MessageService {
      * @return com.kit.deliver.model.Message
      */
     Message getMessageById(String messageId);
+
+    /**
+     * get message list by message id list
+     * @Author jihainan
+     * @Description get message list by message id list
+     * @Date 10:01 上午
+     * @param messageIds message id list
+     * @return java.util.List<com.kit.deliver.dto.model.MessageDto>
+     */
+    List<MessageDto> getMessageListByIds(List<String> messageIds);
 
 }
