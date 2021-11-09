@@ -58,6 +58,12 @@ public class RuleServiceImpl implements RuleService {
         return results;
     }
 
+    @Override
+    public List<Rule> queryMatchingRules(RuleDto ruleDto) {
+        // generate query object
+        return null;
+    }
+
     /**
      * @Author jihainan
      * @Description  rule exception

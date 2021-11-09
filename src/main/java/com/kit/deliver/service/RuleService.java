@@ -34,4 +34,14 @@ public interface RuleService {
      * @return java.util.List<com.kit.deliver.model.Rule>
      */
     List<Rule> batchAddRules(List<RuleDto> rules);
+
+    /**
+     * query matching rules
+     * @Author jihainan
+     * @Description query matching rules
+     * @Date 3:27 下午
+     * @param ruleDto rule data
+     * @return java.util.List<com.kit.deliver.model.Rule>
+     */
+    List<Rule> queryMatchingRules(RuleDto ruleDto);
 }
