@@ -59,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> getAllTasks() {
         return taskRepository.findAll()
                 .stream()
-                .map(task -> modelMapper.map(task, TaskDto.class))
+                .map(TaskMapper::toTaskDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
