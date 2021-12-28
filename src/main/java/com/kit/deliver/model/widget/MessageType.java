@@ -10,9 +10,33 @@ package com.kit.deliver.model.widget;
 public enum MessageType {
 
     /**
+     * notice with a single image
+     */
+    SINGLE_IMG(1),
+    /**
      * notice with a single video
      */
-    VIDEO_NOTICE(1);
+    SINGLE_VIDEO(2),
+    /**
+     * notice with a title, a video and a description
+     */
+    SINGLE_CASE(3),
+    /**
+     * notice with a list of cases displaying in vertical
+     */
+    CASE_LIST_VERTICAL(4),
+    /**
+     * notice with a list of cases displaying in horizontal
+     */
+    CASE_LIS_HORIZONTAL(5),
+    /**
+     * notice with a title, a version, a description and operation buttons
+     */
+    VERSION_UPDATE(6),
+    /**
+     * notice with interoperating information and operation buttons
+     */
+    COLLECT_INFO(7);
 
     Integer value;
 

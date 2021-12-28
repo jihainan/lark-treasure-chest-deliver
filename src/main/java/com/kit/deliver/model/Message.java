@@ -21,7 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Document(collection = "message")
-public class Message {
+public class Message<T> {
     @Id
     private String id;
 
@@ -31,9 +31,9 @@ public class Message {
     private Integer type;
 
     /**
-     * message content
+     * message content associate with message type
      */
-    private Object content;
+    private T content;
 
 
 }
