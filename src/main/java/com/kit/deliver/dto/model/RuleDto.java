@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @ClassName RuleDto
  * @Description Data transfer model of rule
@@ -28,6 +30,11 @@ public class RuleDto {
      * property name related to rule
      */
     private String propertyName;
+    /**
+     * rule validity period
+     */
+    @NotEmpty(message = "{constraints.NotEmpty.message}")
+    private String validUntil;
 
     /**
      * related message id

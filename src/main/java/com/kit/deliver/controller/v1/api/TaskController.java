@@ -3,6 +3,7 @@ package com.kit.deliver.controller.v1.api;
 import com.kit.deliver.controller.v1.command.PublishTaskCommand;
 import com.kit.deliver.dto.model.TaskDto;
 import com.kit.deliver.dto.response.Response;
+import com.kit.deliver.model.Task;
 import com.kit.deliver.service.TaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,10 +53,10 @@ public class TaskController {
 
     @PostMapping("/")
     @ApiOperation(value = "publish a deliver task")
-    public Response<TaskDto> create(@RequestBody @Valid PublishTaskCommand publishTaskCommand) {
+    public Response<Task> create(@RequestBody @Valid PublishTaskCommand publishTaskCommand) {
         TaskDto taskDto = modelMapper.map(publishTaskCommand, TaskDto.class);
         return Response
-                .<TaskDto>ok()
+                .<Task>ok()
                 .setPayload(taskService.publishTask(taskDto));
     }
 

@@ -28,6 +28,11 @@ public class Rule {
      * property name using in rule
      */
     private String propertyName;
+    /**
+     * rule validity period
+     */
+    private String validUntil;
+
 
     /**
      * related message

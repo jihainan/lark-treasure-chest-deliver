@@ -46,6 +46,7 @@ public class RuleServiceImpl implements RuleService {
         Message message = messageService.getMessageById(ruleDto.getMessageId());
         Rule ruleModel = new Rule()
                 .setPropertyName(ruleDto.getPropertyName())
+                .setValidUntil(ruleDto.getValidUntil())
                 .setMessage(message);
         return ruleRepository.save(ruleModel);
     }

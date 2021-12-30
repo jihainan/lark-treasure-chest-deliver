@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public TaskDto publishTask(TaskDto taskDto) {
+    public Task publishTask(TaskDto taskDto) {
         // add a new message
         MessageDto messageDto = new MessageDto()
                 .setType(taskDto.getMessageType())
@@ -93,7 +93,7 @@ public class TaskServiceImpl implements TaskService {
                 .setRules(rules);
         taskRepository.save(taskModel);
 
-        return modelMapper.map(taskModel, TaskDto.class);
+        return taskModel;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.kit.deliver.service;
 
 import com.kit.deliver.dto.model.TaskDto;
+import com.kit.deliver.model.Task;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface TaskService {
      * @Description publish a deliver task
      * @Date 9:35 上午
      * @param taskDto task data transfer object
-     * @return com.kit.deliver.dto.model.TaskDto
+     * @return com.kit.deliver.model.Task
      */
-    TaskDto publishTask(TaskDto taskDto);
+    Task publishTask(TaskDto taskDto);
 }
