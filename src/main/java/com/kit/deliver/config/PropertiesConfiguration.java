@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 /**
- * @ClassName PropertiesConfig
+ * @ClassName PropertiesConfiguration
  * @Description configuration of custom properties
  * @Author jihainan
  * @Date 2021/11/4 5:24 下午
@@ -14,11 +14,11 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @PropertySource("classpath:custom-error.properties")
-public class PropertiesConfig {
+public class PropertiesConfiguration {
     private final Environment env;
 
     @Autowired
-    public PropertiesConfig(Environment env) {
+    public PropertiesConfiguration(Environment env) {
         this.env = env;
     }
 

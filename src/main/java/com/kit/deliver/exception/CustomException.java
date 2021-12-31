@@ -1,6 +1,6 @@
 package com.kit.deliver.exception;
 
-import com.kit.deliver.config.PropertiesConfig;
+import com.kit.deliver.config.PropertiesConfiguration;
 import com.kit.deliver.exception.widget.EntityType;
 import com.kit.deliver.exception.widget.ExceptionType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import java.util.Optional;
  */
 @Component
 public class CustomException {
-    private static PropertiesConfig propertiesConfig;
+    private static PropertiesConfiguration propertiesConfig;
 
     @Autowired
-    public CustomException(PropertiesConfig propertiesConfig) {
+    public CustomException(PropertiesConfiguration propertiesConfig) {
         CustomException.propertiesConfig = propertiesConfig;
     }
 

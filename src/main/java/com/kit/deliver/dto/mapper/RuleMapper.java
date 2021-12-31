@@ -13,7 +13,7 @@ import com.kit.deliver.model.Rule;
 public class RuleMapper {
     public static RuleDto toRuleDto(Rule rule) {
         return new RuleDto()
-                .setMessageId(rule.getId())
+                .setMessageId(rule.getMessageId())
                 .setPropertyName(rule.getPropertyName());
     }
 }

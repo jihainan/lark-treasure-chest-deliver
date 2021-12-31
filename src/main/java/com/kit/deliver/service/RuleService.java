@@ -1,5 +1,6 @@
 package com.kit.deliver.service;
 
+import com.kit.deliver.controller.v1.request.GetRuleRequest;
 import com.kit.deliver.dto.model.RuleDto;
 import com.kit.deliver.model.Rule;
 
@@ -40,8 +41,8 @@ public interface RuleService {
      * @Author jihainan
      * @Description query matching rules
      * @Date 3:27 下午
-     * @param ruleDto rule data
+     * @param getRuleRequest get rule request data
      * @return java.util.List<com.kit.deliver.model.Rule>
      */
-    List<Rule> queryMatchingRules(RuleDto ruleDto);
+    List<Rule> queryMatchingRules(GetRuleRequest getRuleRequest);
 }

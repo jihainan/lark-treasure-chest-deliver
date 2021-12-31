@@ -1,9 +1,13 @@
 package com.kit.deliver.controller.v1.api;
 
 import com.kit.deliver.controller.v1.request.GetMessageRequest;
+import com.kit.deliver.controller.v1.request.GetRuleRequest;
+import com.kit.deliver.controller.v1.request.MarkAsReadRequest;
 import com.kit.deliver.dto.model.MessageDto;
 import com.kit.deliver.dto.response.Response;
 import com.kit.deliver.model.Message;
+import com.kit.deliver.model.Rule;
+import com.kit.deliver.service.CacheService;
 import com.kit.deliver.service.MessageService;
 import com.kit.deliver.service.RuleService;
 import io.swagger.annotations.Api;
@@ -12,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName MessageController
@@ -28,18 +35,42 @@ public class MessageController {
 
     private final MessageService messageService;
     private final RuleService ruleService;
+    private final CacheService cacheService;
 
     @Autowired
-    public MessageController(MessageService messageService, RuleService ruleService) {
+    public MessageController(MessageService messageService, RuleService ruleService, CacheService cacheService) {
         this.messageService = messageService;
         this.ruleService = ruleService;
+        this.cacheService = cacheService;
     }
 
     @PostMapping("/query")
     @ApiOperation(value = "query messages using user characteristic")
-    public Response<List<MessageDto>> queryMessages(@RequestBody @Valid GetMessageRequest getMessageRequest) {
+    public Response<Message> queryMessages(@RequestBody @Valid GetMessageRequest getMessageRequest) {
+        GetRuleRequest ruleRequest = new GetRuleRequest()
+                .setUserId(getMessageRequest.getUserId())
+                .setValidUntil(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+        List<Rule> rules = ruleService.queryMatchingRules(ruleRequest);
+
+        List<String> messageIds = rules.stream().map(Rule::getMessageId).collect(Collectors.toList());
+        String validMessageId = cacheService.getValidMessage(getMessageRequest.getUserId(), messageIds);
+
+        if (validMessageId != null) {
+            return Response
+                    .<Message>ok()
+                    .setPayload(messageService.getMessageById(validMessageId));
+        }
+        return Response.notFound();
+    }
+
+    @PostMapping("/mark")
+    @ApiOperation(value = "mark message as read")
+    public Response<Boolean> markAsRead(@RequestBody MarkAsReadRequest markAsReadRequest) {
         return Response
-                .ok();
+                .<Boolean>ok()
+                .setPayload(cacheService.setMessageCache(
+                        markAsReadRequest.getUserId(),
+                        markAsReadRequest.getMessageId()));
     }
 
     @GetMapping("/{id}")

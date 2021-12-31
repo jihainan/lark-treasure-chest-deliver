@@ -1,5 +1,6 @@
 package com.kit.deliver.service;
 
+import com.kit.deliver.controller.v1.request.GetRuleRequest;
 import com.kit.deliver.dto.model.RuleDto;
 import com.kit.deliver.exception.CustomException;
 import com.kit.deliver.exception.widget.EntityType;
@@ -47,7 +48,7 @@ public class RuleServiceImpl implements RuleService {
         Rule ruleModel = new Rule()
                 .setPropertyName(ruleDto.getPropertyName())
                 .setValidUntil(ruleDto.getValidUntil())
-                .setMessage(message);
+                .setMessageId(message.getId());
         return ruleRepository.save(ruleModel);
     }
 
@@ -60,9 +61,8 @@ public class RuleServiceImpl implements RuleService {
     }
 
     @Override
-    public List<Rule> queryMatchingRules(RuleDto ruleDto) {
-        // generate query object
-        return null;
+    public List<Rule> queryMatchingRules(GetRuleRequest getRuleRequest) {
+        return ruleRepository.findRulesByValidUntilAfter(getRuleRequest.getValidUntil());
     }
 
     /**
