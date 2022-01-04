@@ -30,6 +30,7 @@ services:
     build: .
     links:
       - mongodb
+      - redis
     container_name: lark-treasure-chest-deliver
     restart: on-failure
     ports:
