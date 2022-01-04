@@ -5,27 +5,47 @@ services:
     restart: always
     container_name: "mongodb"
     environment:
-      - MONGO_DATA_DIR=/db/data
+      - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./db/data:/data/db
+      - ./db/mongodb/data:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
     command: mongod --bind_ip_all --logpath=/dev/null # --quiet
 
-  web:
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./db/redis/config/redis.conf:/etc/redis/redis.conf
+      - ./db/redis/data:/opt/data
+      - ./db/redis/log:/opt/log
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+
+  deliver:
     build: .
     links:
       - mongodb
-    container_name: BRS-Service
+    container_name: lark-treasure-chest-deliver
     restart: on-failure
     ports:
-      - "8080:8080"
+      - "7776:7776"
     environment:
+      - SPRING_PROFILES_ACTIVE=dev
       - MONGODB_PORT=27017
-      - MONGODB_SCHEMA=brs
+      - MONGODB_SCHEMA=deliver_kit
+      - MONGODB_USERNAME=deliver_kit
+      - MONGODB_PASSWORD=123456
       - MONGODB_HOST=mongodb
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DATABASE=0
+      - REDIS_PASSWORD=123456
       - LOG_LEVEL=DEBUG
-      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - mongodb
+      - redis
