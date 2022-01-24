@@ -4,6 +4,7 @@ import com.kit.deliver.cache.GlobalCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,11 @@ public class CacheServiceImpl implements CacheService{
     @Override
     public Boolean setMessageCache(String userId, String messageId) {
         List<Object> cacheList = globalCache.listGet(userId, 0L, -1L);
-        cacheList.add(messageId);
-        return globalCache.listSetAll(userId, cacheList);
+        if (cacheList.size() == 0) {
+            cacheList.add(messageId);
+            return globalCache.listSetAll(userId, cacheList);
+        } else {
+            return globalCache.listSet(userId, messageId);
+        }
     }
 }
